@@ -76,5 +76,5 @@ def replying_to_tweets():
 
 while True:
     replying_to_tweets()
-    time.sleep(50)
+    time.sleep(60)
     print("Update...\n\n")
