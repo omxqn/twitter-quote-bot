@@ -1,1 +1,1 @@
-web: sh setup.sh && python twitter bot.py
+web: sh setup.sh && python3 'twitter bot.py'
