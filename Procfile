@@ -1,2 +1,1 @@
-worker
-: python3 'twitter bot.py'
+worker: python3 'twitter bot.py'
