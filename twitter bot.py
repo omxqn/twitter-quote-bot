@@ -61,7 +61,8 @@ def replying_to_tweets():
     mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
     for mention in reversed(mentions):
-        print("NEW MENTION ",str(mention.id) + " - " + mention.full_text)
+        print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
+        print()
         last_id = mention.id
         
         if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
@@ -69,6 +70,7 @@ def replying_to_tweets():
             print("Found #quote!")
             print("Responding back \n\n")
             api.update_status('@' + mention.user.screen_name + " " + get_quots() , mention.id)
+            
         else:
             print("There is no hashtag #quote")
 
