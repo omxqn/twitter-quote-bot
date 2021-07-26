@@ -63,8 +63,8 @@ def replying_to_tweets():
     for mention in reversed(mentions):
         print("NEW MENTION ",str(mention.id) + " - " + mention.full_text)
         last_id = mention.id
-        #"#quote" in mention.full_text.lower() and 
-        if str(mention.id) not in id_list:
+        
+        if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
             store_last_seen_id(last_id, FILE_NAME)
             print("Found #quote!")
             print("Responding back \n\n")
