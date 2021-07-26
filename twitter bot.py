@@ -68,11 +68,11 @@ def replying_to_tweets():
         if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
             store_last_seen_id(last_id, FILE_NAME)
             print("Found #quote!")
-            print("Responding back \n\n")
             api.update_status('@' + mention.user.screen_name + " " + get_quots() , mention.id)
+            print("Responding back had been sent!!!! \n\n")
             
         else:
-            print("There is no hashtag #quote")
+            print("There is no hashtag #quote \n\n")
 
 
 
