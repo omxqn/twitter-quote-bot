@@ -65,16 +65,18 @@ def replying_to_tweets():
         print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
         print()
         last_id = mention.id # get the mention ID
-        quote = get_quots() # get a quote
-        arabic_quote = translate(quote) # translate the quote
+
         print(f"Translated quote: {arabic_quote}")
         if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
             store_last_seen_id(last_id, FILE_NAME) # store the id to file
             print("Found #quote!")
             if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
+              quote = get_quots() # get a quote
               api.update_status('@' + mention.user.screen_name + " " + quote , mention.id)
               print("Responding back had been sent!!!! \n\n")
             elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
+              quote = get_quots() # get a quote
+              arabic_quote = translate(quote) # translate the quote
               api.update_status('@' + mention.user.screen_name + " " + arabic_quote , mention.id)
               print("تم ارسال الرد!!!! \n\n")
         else:
