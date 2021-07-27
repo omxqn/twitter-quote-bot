@@ -67,7 +67,8 @@ def replying_to_tweets():
         last_id = mention.id # get the mention ID
 
         print(f"Translated quote: {arabic_quote}")
-        if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
+        #"#quote" in mention.full_text.lower() and 
+        if str(mention.id) not in id_list:
             store_last_seen_id(last_id, FILE_NAME) # store the id to file
             print("Found #quote!")
             if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
