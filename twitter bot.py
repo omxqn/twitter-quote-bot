@@ -75,6 +75,8 @@ def replying_to_tweets():
               api.update_status('@' + mention.user.screen_name + " " + quote , mention.id)
               print("Responding back had been sent!!!! \n\n")
             elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
+              api.update_status('@' + mention.user.screen_name + " " + arabic_quote , mention.id)
+              print("تم ارسال الرد!!!! \n\n")
         else:
             print("There is no hashtag #quote \n\n")
 
