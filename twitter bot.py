@@ -2,6 +2,7 @@ import tweepy as tw
 import time
 import json
 import requests
+from translator import translate
 
 CUNSUMER_KEY= '9HosWJf0O6OWIF4XgqXEGsqco'
 CUNSUMER_SECRET= 'xtGsk8v15LhTIvrq3fZGkHKZOaJjjRyk7wgbB970BT3izySMQk'
@@ -63,14 +64,17 @@ def replying_to_tweets():
     for mention in reversed(mentions):
         print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
         print()
-        last_id = mention.id
-        
+        last_id = mention.id # get the mention ID
+        quote = get_quots() # get a quote
+        arabic_quote = translate(quote) # translate the quote
+        print(f"Translated quote: {arabic_quote}")
         if "#quote" in mention.full_text.lower() and str(mention.id) not in id_list:
-            store_last_seen_id(last_id, FILE_NAME)
+            store_last_seen_id(last_id, FILE_NAME) # store the id to file
             print("Found #quote!")
-            api.update_status('@' + mention.user.screen_name + " " + get_quots() , mention.id)
-            print("Responding back had been sent!!!! \n\n")
-            
+            if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
+              api.update_status('@' + mention.user.screen_name + " " + quote , mention.id)
+              print("Responding back had been sent!!!! \n\n")
+            elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
         else:
             print("There is no hashtag #quote \n\n")
 
