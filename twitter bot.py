@@ -83,7 +83,7 @@ def replying_to_tweets():
             #"#quote" in mention.full_text.lower() and 
             if str(mention.id) not in id_list:
                 print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
-                
+                store_last_seen_id(last_id, FILE_NAME) # store the id to file
                 print("Found #quote!")
                 if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
                   
@@ -91,12 +91,12 @@ def replying_to_tweets():
                   if t in mention.full_text.lower():
                       quote,author = get_quote(t) # get a quote
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
-                      store_last_seen_id(last_id, FILE_NAME) # store the id to file
+     
                       print("Responding back had been sent!!!! \n\n")
                   else:
                       quote,author = get_quote(t) # get a quote
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
-                      store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                
                       print("Responding back had been sent!!!! -No category \n\n")
                       
                 elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
@@ -107,14 +107,14 @@ def replying_to_tweets():
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
-                      store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                      
                       print("تم ارسال الرد!!!! \n\n")
                   else:
                       quote,author = get_quote() # get a quote
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
-                      store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                     
                       print("تم ارسال الرد!!!! لايوجد تصنيف \n\n")
             else:
                 print("There isn't any new mention \n\n")
