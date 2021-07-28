@@ -81,11 +81,12 @@ def replying_to_tweets():
         for t in tags:
             #"#quote" in mention.full_text.lower() and 
             if str(mention.id) not in id_list:
-                print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
+               
                 
                 print("Found #quote!")
                 if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
                   store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
 
                   if t in mention.full_text.lower():
                       quote,author = get_quote(t) # get a quote
@@ -100,6 +101,7 @@ def replying_to_tweets():
                       
                 elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
                   store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
 
                   if t in mention.full_text.lower():
                       quote,author = get_quote(t) # get a quote
