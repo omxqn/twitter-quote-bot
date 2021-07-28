@@ -106,14 +106,14 @@ def replying_to_tweets():
                       quote,author = get_quote(t) # get a quote
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
-                      api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
+                      api.update_status('@' + mention.user.screen_name + " " + arabic_quote  + "|-|" + author, mention.id)
                       
                       print("تم ارسال الرد!!!! \n\n")
                   else:
                       quote,author = get_quote() # get a quote
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
-                      api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
+                      api.update_status('@' + mention.user.screen_name + " " + arabic_quote  + "|-|" + author, mention.id)
                      
                       print("تم ارسال الرد!!!! لايوجد تصنيف \n\n")
             else:
