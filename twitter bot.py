@@ -82,10 +82,10 @@ def replying_to_tweets():
             #"#quote" in mention.full_text.lower() and 
             if str(mention.id) not in id_list:
                 print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
-                store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                
                 print("Found #quote!")
                 if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
-                  
+                  store_last_seen_id(last_id, FILE_NAME) # store the id to file
 
                   if t in mention.full_text.lower():
                       quote,author = get_quote(t) # get a quote
@@ -99,7 +99,7 @@ def replying_to_tweets():
                       print("Responding back had been sent!!!! -No category \n\n")
                       
                 elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
-  
+                  store_last_seen_id(last_id, FILE_NAME) # store the id to file
 
                   if t in mention.full_text.lower():
                       quote,author = get_quote(t) # get a quote
