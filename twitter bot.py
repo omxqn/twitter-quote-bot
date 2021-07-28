@@ -93,11 +93,13 @@ def replying_to_tweets():
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
      
                       print("Responding back had been sent!!!! \n\n")
+                      break
                   else:
                       quote,author = get_quote(t) # get a quote
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
                 
                       print("Responding back had been sent!!!! -No category \n\n")
+                      break
                       
                 elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
                   store_last_seen_id(last_id, FILE_NAME) # store the id to file
@@ -108,8 +110,9 @@ def replying_to_tweets():
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
                       api.update_status('@' + mention.user.screen_name + " " + arabic_quote  + "|-|" + author, mention.id)
-                      
+                                            
                       print("تم ارسال الرد!!!! \n\n")
+                      break
                   else:
                       quote,author = get_quote() # get a quote
                       arabic_quote = translate(quote) # translate the quote
@@ -117,6 +120,7 @@ def replying_to_tweets():
                       api.update_status('@' + mention.user.screen_name + " " + arabic_quote  + "|-|" + author, mention.id)
                      
                       print("تم ارسال الرد!!!! لايوجد تصنيف \n\n")
+                      break
             else:
                 print("There isn't any new mention \n\n")
 
