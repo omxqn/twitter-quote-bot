@@ -33,7 +33,13 @@ def add_new(name,id,message): # Insert new details
         db.commit()
         print("Data saved successfully in database")
     except Exception:
-        print("Error while adding to database")
+        try:
+            my_curser.execute(f'INSERT INTO id_list (name,id,date) VALUES {(name, id, str(date) + " " + str(times))}')
+            print("committing")
+            db.commit()
+            print("Data saved successfully in database")
+        except Exception:
+            print("Error while adding to database")
 
 
 def get_table_info(table):
@@ -57,9 +63,5 @@ if __name__=="__main__":
     #add_new(name='Null',id=15115511515,message='Previous messages')
     print('Done... ')
     print(get_table_info('id_list'))
-
-
-
-
 
 
