@@ -3,7 +3,6 @@ import time
 import requests
 from translator import translate
 from database import get_table_info,add_new
-
 CUNSUMER_KEY= 'hG3fEUlJQNszuGvc6Z0gYeb67'
 CUNSUMER_SECRET= 'FpdSCzwhz5z1IjrKqzEX9r0TunI5HT6YFXFMXTfyXz37tUXrD0'
 
@@ -69,11 +68,11 @@ def replying_to_tweets():
 
     print("Loading mentions")
     id_list = get_table_info('id_list')
-    last_seen_id = id_list[-1].removesuffix('\n')
+    last_seen_id = id_list[-1]
     mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
     for mention in reversed(mentions):
-        
+
         for t in tags:
             #"#quote" in mention.full_text.lower() and 
             if str(mention.id) not in id_list:
