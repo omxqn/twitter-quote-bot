@@ -1,6 +1,7 @@
 import tweepy as tw
 import time
 import requests
+import json
 from translator import translate
 from database import get_table_info,add_new
 CUNSUMER_KEY= 'hG3fEUlJQNszuGvc6Z0gYeb67'
@@ -30,14 +31,13 @@ def get_quote(category=None):
     author = response['author'].strip()
     return quote,author
 
-'''
 
 def get_quots():
   response = requests.get("https://zenquotes.io/api/random")
   json_data = json.loads(response.text)
   quots = json_data[0]["q"] + " |-| " + json_data[0]["a"]
   return(quots)
-
+'''
 def retraive_last_seen_id(file_name):
     try:
         t = []
@@ -90,7 +90,7 @@ def replying_to_tweets():
                       print("Responding back had been sent!!!! \n\n")
                       break
                   else:
-                      quote,author = get_quote(t) # get a quote
+                      quote,author = get_quots() # get a quote
                       api.update_status('@' + mention.user.screen_name + " " + quote + "|-|" + author, mention.id)
                 
                       print("Responding back had been sent!!!! -No category \n\n")
@@ -110,7 +110,7 @@ def replying_to_tweets():
                       print("تم ارسال الرد!!!! \n\n")
                       break
                   else:
-                      quote,author = get_quote() # get a quote
+                      quote,author = get_quots() # get a quote
                       arabic_quote = translate(quote) # translate the quote
                       print(f"Translated quote: {arabic_quote}")
                       api.update_status('@' + mention.user.screen_name + " " + arabic_quote  + "|-|" + author, mention.id)
