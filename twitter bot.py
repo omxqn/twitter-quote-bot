@@ -1,8 +1,9 @@
 import tweepy as tw
 import time
-import json
 import requests
 from translator import translate
+from database import get_table_info,add_new
+
 CUNSUMER_KEY= 'hG3fEUlJQNszuGvc6Z0gYeb67'
 CUNSUMER_SECRET= 'FpdSCzwhz5z1IjrKqzEX9r0TunI5HT6YFXFMXTfyXz37tUXrD0'
 
@@ -16,7 +17,7 @@ auth.set_access_token(ACCESS_KEY,ACCESS_SECRET)
 api = tw.API(auth,wait_on_rate_limit=True)
 
 
-FILE_NAME = 'last_seen_id.txt'
+#FILE_NAME = 'last_seen_id.txt'
 
 
 
@@ -30,15 +31,13 @@ def get_quote(category=None):
     author = response['author'].strip()
     return quote,author
 
+'''
 
-
-#def get_quots():
-#  response = requests.get("https://zenquotes.io/api/random")
-#  json_data = json.loads(response.text)
-#  quots = json_data[0]["q"] + " |-| " + json_data[0]["a"]
-#  return(quots)
-
-
+def get_quots():
+  response = requests.get("https://zenquotes.io/api/random")
+  json_data = json.loads(response.text)
+  quots = json_data[0]["q"] + " |-| " + json_data[0]["a"]
+  return(quots)
 
 def retraive_last_seen_id(file_name):
     try:
@@ -59,33 +58,30 @@ def store_last_seen_id(last_seen_id,filename):
     f_write.close()
     print(last_seen_id,"Has bees stored")
     return
-# 1419187764558540800
-
-'''print(mentions[0].__dict__.keys())
+print(mentions[0].__dict__.keys())
 print(mentions[0].text)
 print(mentions[0].id)
 '''
+
 def replying_to_tweets():
     tags = ['business', 'education', 'faith', 'famous-quotes', 'friendship', 'future', 'happiness', 'history', 'inspirational', 'life',
         'literature', 'love', 'nature', 'politics', 'religion', 'science', 'success', 'technology', 'wisdom']
 
     print("Loading mentions")
-    id_list = retraive_last_seen_id(FILE_NAME)
+    id_list = get_table_info('id_list')
     last_seen_id = id_list[-1].removesuffix('\n')
     mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
     for mention in reversed(mentions):
         
-        last_id = mention.id # get the mention ID
-
         for t in tags:
             #"#quote" in mention.full_text.lower() and 
             if str(mention.id) not in id_list:
-               
-                
-                print("Found #quote!")
+
+                print("Found unseen mention!")
                 if "english" in mention.full_text.lower() or "انجليزي" in mention.full_text.lower() or "أنجليزي" in mention.full_text.lower():
-                  store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  #store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  add_new(name=mention.user.screen_name,id=mention.id,message=mention.full_text)# store the mention info to database
                   print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
 
                   if t in mention.full_text.lower():
@@ -102,7 +98,8 @@ def replying_to_tweets():
                       break
                       
                 elif "arabic" in mention.full_text.lower() or "عربي" in mention.full_text.lower() or "بالعربي" in mention.full_text.lower():
-                  store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  #store_last_seen_id(last_id, FILE_NAME) # store the id to file
+                  add_new(name=mention.user.screen_name, id=mention.id,message=mention.full_text)  # store the mention info to database
                   print("NEW MENTION ",str(mention.id) + " - " + mention.full_text,f"From: @{mention.user.screen_name}")
 
                   if t in mention.full_text.lower():
