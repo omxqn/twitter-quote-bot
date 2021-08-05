@@ -70,7 +70,7 @@ def replying_to_tweets():
             'literature', 'love', 'nature', 'politics', 'religion', 'science', 'success', 'technology', 'wisdom']
 
     print("Loading mentions")
-    id_list = get_table_info('id_list',id=True)
+    id_list = get_table_info('id_list',True)
     last_seen_id = id_list[-1]
     mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
